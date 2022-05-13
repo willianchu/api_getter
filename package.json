@@ -1,0 +1,18 @@
+{
+  "name": "api_getter",
+  "version": "1.0.0",
+  "description": "an api get results from another api",
+  "main": "api.js",
+  "type": "module",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "api"
+  ],
+  "author": "willian chu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
