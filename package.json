@@ -1,12 +1,12 @@
 {
-  "name": "api_getter",
+  "name": "API",
   "version": "1.0.0",
   "description": "an api get results from another api",
-  "main": "api.js",
-  "type": "module",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon api.js"
-    "test": "jest"
+    "start": "nodemon start.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "api"
@@ -14,9 +14,16 @@
   "author": "willian chu",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
+    "cross-env": "^7.0.3",
+    "cross-fetch": "^3.1.5",
+    "express": "^4.18.1",
+    "node-fetch": "^3.2.4"
   },
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.16",
+    "supertest": "^6.2.3"
   }
 }
