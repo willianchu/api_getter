@@ -3,6 +3,9 @@ const fetch = require('cross-fetch');
 // rules
 const SORT_FIELDS = ['id', 'reads', 'likes', 'popularity'];
 const SORT_DIRECTIONS = ['asc', 'desc'];
+// cache
+var cacheTagsHistory = []; // cache for tags already searched
+var cachePosts = []; // cache for posts already
 
 function uniquePostsList(ArrayOfPosts) {
   const uniquePosts = [];
@@ -18,17 +21,45 @@ function uniquePostsList(ArrayOfPosts) {
   return uniquePosts; 
 };
 
-async function getData(tags, sortBy = 'id', direction = 'asc') { // many as user wants
-  const tagsArray = tags.split(','); // get "n" tags from query string
-  const fetchArray = [];
-  tagsArray.forEach(tag => { // for each "n" tag, a new fetch for posts with that tag
-    fetchArray.push(fetch(`https://api.hatchways.io/assessment/blog/posts?tag=${tag}`).then(res => res.json()));
+async function getData(tags, sortBy = 'id', direction = 'asc') { // search for many tags as user wants
+  const tagsArray = tags.split(','); 
+  const fetchFunctionsArray = []; // array of functions to fetch data from external API
+  /*
+  Cache Solution
+  */
+  const tagsForFetch = []; // Look only for tags that are not in cache
+  const localPosts = []; // posts from cache for this tags run
+  tagsArray.forEach(tag => {
+    if (!cacheTagsHistory.includes(tag)) {
+      tagsForFetch.push(tag);   
+    } else {
+      cachePosts.forEach(post => {
+        if (post.tags.includes(tag)) {
+          localPosts.push(post);
+        }
+      })  
+    }
   });
-  const allPosts = Promise.all(fetchArray)
-  .then(posts => {
-    return uniquePostsList(posts);
-  })
-  return allPosts;    
+  /*
+  External Fetch
+  */
+  if (tagsForFetch.length > 0) {
+    tagsForFetch.forEach(tag => { // for each "n" tag, a new fetch for posts with that tag
+      fetchFunctionsArray.push(fetch(`https://api.hatchways.io/assessment/blog/posts?tag=${tag}`).then(res => res.json()));
+    });
+    const allPosts = Promise.all(fetchFunctionsArray)
+    .then(posts => {
+      posts.push({"posts":localPosts}); // add local posts to the end of the array
+      const uniquePosts = uniquePostsList(posts); // remove duplicates
+      cacheTagsHistory = cacheTagsHistory.concat(tagsArray); // add tags to cache
+      cachePosts = cachePosts.concat(uniquePosts); // add posts to cache
+      return uniquePosts;
+    })
+    return allPosts;
+  } else { 
+    const postFormat = [{ "posts": localPosts }];
+    return uniquePostsList(postFormat);
+  }
 };
 
 function sortPosts(posts, sortBy = "id", direction = "asc") {

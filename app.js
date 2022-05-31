@@ -8,5 +8,4 @@ app.use(bodyParser.json());
 
 app.use('/api', apiRouter);
 
-// export default app;
 module.exports = app;

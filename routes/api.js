@@ -4,9 +4,7 @@ const { SORT_DIRECTIONS, SORT_FIELDS, getPosts } = require('../externalApi.js');
 const router = express.Router();
 
 router.get('/ping', (req, res) => {
-  res.json({
-    success: true
-  });
+  res.json({ success: true });
 });
 
 
@@ -26,6 +24,7 @@ router.get('/posts', async function (req, res) {
       return;
     }
     const posts = await getPosts(tag, sortBy, direction);
+    
     res.json({ posts });
   } catch (err) {
     res.status(500).json({ error: "something wrong" });

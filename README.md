@@ -1,6 +1,6 @@
 # API fetcher
 
-This is a simple API fetcher that can be used to fetch data from the [api.hatchways.io](https://api.hatchways.io/assessment/solution/posts) API.
+This is a simple API fetcher that can be used to fetch data from the https adress API.
 
 It can be set to use any amount of tags in the following way:
 
