@@ -4,8 +4,8 @@ const fetch = require('cross-fetch');
 const SORT_FIELDS = ['id', 'reads', 'likes', 'popularity'];
 const SORT_DIRECTIONS = ['asc', 'desc'];
 // cache
-var cacheTagsHistory = []; // cache for tags already searched
-var cachePosts = []; // cache for posts already
+const cacheTagsHistory = []; // cache for tags already searched
+const cachePosts = []; // cache for posts already
 
 function uniquePostsList(ArrayOfPosts) {
   const uniquePosts = [];
@@ -45,7 +45,7 @@ async function getData(tags, sortBy = 'id', direction = 'asc') { // search for m
   */
   if (tagsForFetch.length > 0) {
     tagsForFetch.forEach(tag => { // for each "n" tag, a new fetch for posts with that tag
-      fetchFunctionsArray.push(fetch(`https://api.hatchways.io/assessment/blog/posts?tag=${tag}`).then(res => res.json()));
+      fetchFunctionsArray.push(fetch(`https://api.secret/posts?tag=${tag}`).then(res => res.json()));
     });
     const allPosts = Promise.all(fetchFunctionsArray)
     .then(posts => {
