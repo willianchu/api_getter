@@ -1,14 +1,14 @@
-* To Improve
+# To Improve
 
-- create a new function to cache the results
+- refactor function getdata() and split in a new function cacheResults()
 - store searched words in object instead of array
-- use the params as given by the question "tag" instead of "tags"
-- use more ternary operators
-- reduce the comments
-- in Jest Tests mock data to verify the sort function and merge multiple keywords
-- look for var or let use const
-- handle errors from the API request promise
 - instead nested loops use an object or hashmap
+- handle errors from the API request promise
+- in Jest Tests mock data to verify the sort function and merge multiple keywords
+- reduce the comments
+- use more ternary operators
+- use the params as given by the question "tag" instead of "tags"
+- look for var or let use const
 
 
   
